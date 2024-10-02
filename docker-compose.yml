@@ -1,29 +1,47 @@
 services:
 
-  web:
+  node-service:
     build:
       context: .
-      dockerfile: Dockerfile
-    container_name: web-container  # Simplified container name
+      dockerfile: node/Dockerfile
+    container_name: node-container  # Simplified container name
     restart: always
     depends_on:
-      db:
+      mysql-service:
         condition: service_healthy  # Web waits for DB to be healthy before starting
     ports:
-      - "3001:3000"  # Map internal port 3000 to host port 3001
+      - "3000:3000"  # Map internal port 3000 to host port 3001
     networks:
       - app_network  # Updated network name for consistency
 
-  db:
+  flask-service:
+    build:
+      context: .
+      dockerfile: python/Dockerfile
+    container_name: flask-container
+    ports:
+      - "3001:3001"
+    environment:
+      - FLASK_ENV=development
+    depends_on:
+      mysql-service:
+        condition: service_healthy  # Web waits for DB to be healthy before starting
+    networks:
+      - app_network
+    volumes:
+      - .:/app
+    restart: always
+  
+  mysql-service:
     image: mysql:latest  # MySQL image with the latest tag
     restart: always
-    container_name: db-container  # Simplified container name
+    container_name: mysql-container  # Simplified container name
     environment:
-      MYSQL_DATABASE: app_db  # Changed to generic DB name for tutorial purposes
+      MYSQL_DATABASE: mysql_db  # Changed to generic DB name for tutorial purposes
       MYSQL_ROOT_PASSWORD: password  # Generic password
     volumes:
-      - db_data:/var/lib/mysql  # Volume for persistent DB storage
-      - ./scripts:/docker-entrypoint-initdb.d  # Scripts to initialize the DB
+      - mysql_volume:/var/lib/mysql  # Volume for persistent DB storage
+      - ./scripts:/docker-entrypoint-initdb.d # Scripts to initialize the DB
     networks:
       - app_network  # Updated network name for consistency
     healthcheck:
@@ -33,7 +51,7 @@ services:
       retries: 3  # Healthcheck to ensure the DB is ready
 
 volumes:
-  db_data:  # Persistent volume for MySQL data
+  mysql_volume:  # Persistent volume for MySQL data
 
 networks:
   app_network:  # Updated network name to make it tutorial-friendly

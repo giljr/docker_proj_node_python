@@ -2,13 +2,13 @@
 SHOW DATABASES;
 
 -- Create a new database if it doesn't exist
-CREATE DATABASE IF NOT EXISTS app_db;
+CREATE DATABASE IF NOT EXISTS mysql_db;
 
 -- Show databases again to verify the new database
 SHOW DATABASES;
 
 -- Use the new database
-USE app_db;
+USE mysql_db;
 
 -- Create the products table if it doesn't exist
 CREATE TABLE IF NOT EXISTS products (

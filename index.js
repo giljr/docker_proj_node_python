@@ -6,10 +6,10 @@ const port = 3000;
 
 // Create MySQL connection
 var connection = mysql.createConnection({
-  host: 'db', // Updated to match the service name in docker-compose.yml
+  host: 'mysql-service', // Updated to match the service name in docker-compose.yml
   user: 'root',
   password: 'password', // Updated to match the password in docker-compose.yml
-  database: 'app_db', // Updated to match the database name in docker-compose.yml
+  database: 'mysql_db', // Updated to match the database name in docker-compose.yml
   port: 3306
 });
 
@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 
     if (results.length > 0) {
       const productNames = results.map(product => product.name).join(', ');
-      res.send(`Products: ${productNames}`);
+      res.send(`node-service:<br>Products: ${productNames}`);
     } else {
       res.send('No products found in the database.');
     }
