@@ -6,7 +6,7 @@ Docker Node Python is a versatile project that combines the power of Python and 
 
 Ready to dive in? Explore the project on my GitHub!
 
-🔹 What's New in this APP?
+🔹To get started with Docker Node Python Project, clone the repository and follow the terminal setup instructions below:
 
     cd Desktop/
     mkdir nodePythonAPP
