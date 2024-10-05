@@ -1,71 +1,24 @@
-mkdir docker_projects
-cd docker_projects/
-code .
-touch Dockerfile
-touch index.js
-touch package.json
+cd Desktop/
+mkdir nodePythonAPP
+cd nodePythonAPP
+git clone https://github.com/giljr/docker_proj_node_python.git
+cd docker_proj_node_python
+sudo docker compose up --build
+docker ps -a
+docker compose down
+docker ps -a
+docker volume ls
+docker volume rm $(docker volume ls -q)
+cd
+clear
+mkdir nodePythonAPP
+cd nodePythonAPP/
+mkdir python
+touch python/Dockerfile
+mkdir node
+touch node/Dockerfile
 mkdir scripts
 touch scripts/init.sql
-ls
-docker network ls
-docker network create jungle_network
-docker network ls
-docker run -d --name j3-mysql-container --restart always -e MYSQL_DATABASE=j3_mysql_db -e MYSQL_ROOT_PASSWORD=mysql -v db_mysql_data_volume:/var/lib/mysql -v ./scripts:/docker-entrypoint-initdb.d --network jungle_network  mysql:latest
-docker rm -f $(docker ps -a -q)
-docker ps -a
-docker run -d --name j3-mysql-container --restart always -e MYSQL_DATABASE=j3_mysql_db -e MYSQL_ROOT_PASSWORD=mysql -v db_mysql_data_volume:/var/lib/mysql -v ./scripts:/docker-entrypoint-initdb.d --network jungle_network  mysql:latest
-docker rm -f $(docker ps -a -q)
-clear
-docker ps -a
-docker run -d --name j3-mysql-container --restart always -e MYSQL_DATABASE=j3_mysql_db -e MYSQL_ROOT_PASSWORD=mysql -v db_mysql_data_volume:/var/lib/mysql -v ./scripts:/docker-entrypoint-initdb.d --network jungle_network  mysql:latest
-docker build -t j3-web-image .
-docker image ls
-docker rmi bfe3508bf510
-docker image ls
-docker run -d --name j3-web-container --restart always -p 3001:3000 --network jungle_network j3-web-image
-clear
-docker ps
-docker exec -it j3-mysql-container mysql -uroot -pmysql
-clear
-docker stop j3-web-container
-docker stop j3-mysql-container
-docker ps -a
-docker rm -f $(docker ps -a -q)
-docker ps -a
-docker network ls
-docker network rm $(docker network ls -q)
-touch docker-compose.yml
-docker compose up --build
-docker ps -a
-docker logs db-container 
-clear
-docker exec -it db-container mysql -uroot -ppassword
-docker compose down
-docker ps 
-docker ps -a
-docker volume ls
-docker volume rm docker_projects_db_data 
-docker volume ls
-clear
-docker compose up --build
-docker compose down
-docker compose up --build
-clear
-docker exec -it db-container mysql -uroot -ppassword
-docker exec -it db-container mysql bash
-docker exec -it db-container mysql -ppassword
-docker exec -it db-container bash
-clear
-docker compose down
-docker compose up --build
-docker volume ls
-docker volume rm $(docker volume ls -q)
-docker compose down
-docker volume rm $(docker volume ls -q)
-clear
-docker compose up --build
-docker compose down
-docker volume rm $(docker volume ls -q)
-docker compose up --build
-ls
-history >> history_docker.txt
+touch Dockerfile index.js package.json
+touch requirements.txt
+touch add_more_products.sql
